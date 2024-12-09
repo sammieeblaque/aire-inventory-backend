@@ -47,4 +47,9 @@ export class InventoryController {
   getSalesHistory() {
     return this.inventoryService.getSalesHistory();
   }
+
+  @Get('products')
+  getProducts() {
+    return this.inventoryService.getProducts();
+  }
 }

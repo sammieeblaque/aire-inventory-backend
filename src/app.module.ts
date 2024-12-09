@@ -4,6 +4,8 @@ import { InventoryModule } from './modules/inventory/inventory.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeorm from './config/typeorm.config';
 import configuration from './config/configuration.config';
+import { AppService } from './app.service';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -19,5 +21,7 @@ import configuration from './config/configuration.config';
     }),
     InventoryModule,
   ],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

@@ -103,4 +103,10 @@ export class InventoryService {
       order: { date: 'DESC' },
     });
   }
+
+  async getProducts(): Promise<Product[]> {
+    return this.productRepository.find({
+      order: { name: 'ASC' },
+    });
+  }
 }
