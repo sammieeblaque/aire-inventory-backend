@@ -87,7 +87,9 @@ export class InventoryService {
       },
     });
 
-    return sales.reduce((total, sale) => total + sale.profit, 0);
+    const totalProfit = sales.reduce((total, sale) => +total + +sale.profit, 0);
+
+    return totalProfit;
   }
 
   async getTotalInventoryValue(): Promise<number> {
