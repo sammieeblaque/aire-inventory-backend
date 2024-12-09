@@ -1,18 +1,9 @@
-import {
-  Controller,
-  Post,
-  Body,
-  Get,
-  Query,
-  UseInterceptors,
-  ClassSerializerInterceptor,
-} from '@nestjs/common';
+import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { SellProductDto } from './dto/sell-product.dto';
 
 @Controller('api/inventory')
-@UseInterceptors(ClassSerializerInterceptor)
 export class InventoryController {
   constructor(private readonly inventoryService: InventoryService) {}
 
