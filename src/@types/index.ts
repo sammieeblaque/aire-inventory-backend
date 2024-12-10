@@ -3,7 +3,8 @@ export interface IQuery {
   page?: number;
   filter?: Record<string, any>;
   filterOr?: Record<string, any>;
-  search?: Record<string, any>;
+  search?: string;
+  // search?: Record<string, any>;
 }
 
 export interface PaginatedResponse<T> {

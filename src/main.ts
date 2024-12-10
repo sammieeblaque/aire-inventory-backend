@@ -17,10 +17,10 @@ async function bootstrap() {
   });
 
   const config = new DocumentBuilder()
-    .setTitle('Flowline API Documentation')
-    .setDescription('The Flowline API description')
+    .setTitle('Aire Beauty API Documentation')
+    .setDescription('The Aire API description')
     .setVersion('1.0')
-    .addTag('flowline')
+    .addTag('Aire')
     .addBearerAuth()
     .build();
 
@@ -29,6 +29,6 @@ async function bootstrap() {
 
   app.useGlobalInterceptors(new ClassSerializerInterceptor(reflector));
 
-  await app.listen(3000);
+  await app.listen(process.env.PORT || 3000);
 }
 bootstrap();
