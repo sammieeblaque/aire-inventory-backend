@@ -15,6 +15,9 @@ export class Sale {
   totalSaleValue: number;
 
   @Column('decimal')
+  costValue: number;
+
+  @Column('decimal')
   profit: number;
 
   @Column('timestamp')
