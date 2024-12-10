@@ -14,10 +14,7 @@ export class Sale {
   @Column('decimal')
   totalSaleValue: number;
 
-  @Column('decimal')
-  costValue: number;
-
-  @Column('decimal')
+  @Column('decimal', { default: 0 })
   startValue: number;
 
   @Column('decimal')
