@@ -2,6 +2,7 @@ import { Controller, Post, Body, Get, Query } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { SellProductDto } from './dto/sell-product.dto';
+import { IQuery } from 'src/@types';
 
 @Controller('api/inventory')
 export class InventoryController {
@@ -18,8 +19,8 @@ export class InventoryController {
   }
 
   @Get('report')
-  getInventoryReport() {
-    return this.inventoryService.getInventoryReport();
+  getInventoryReport(@Query() query: IQuery) {
+    return this.inventoryService.getInventoryReport(query);
   }
 
   @Get('daily-profit')

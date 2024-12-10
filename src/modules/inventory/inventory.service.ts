@@ -2,6 +2,7 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  Query,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Between, Repository } from 'typeorm';
@@ -9,6 +10,8 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { SellProductDto } from './dto/sell-product.dto';
 import { Product } from './entities/product.entity';
 import { Sale } from './entities/sale.entity';
+import { ApiQuery } from '@nestjs/swagger';
+import { IQuery, PaginatedResponse } from 'src/@types';
 
 @Injectable()
 export class InventoryService {
@@ -72,8 +75,35 @@ export class InventoryService {
     return this.saleRepository.save(sale);
   }
 
-  async getInventoryReport(): Promise<Product[]> {
-    return this.productRepository.find();
+  @ApiQuery({ name: 'page', required: false, type: Number })
+  @ApiQuery({ name: 'limit', required: false, type: Number })
+  async getInventoryReport(
+    @Query() query: IQuery,
+  ): Promise<PaginatedResponse<Product>> {
+    query.page = Number(query.page) > 1 ? Number(query.page) - 1 : 0;
+    const take = Number(query.limit) || 10;
+    const skip = query.page * take || 0;
+
+    const [result, total] = await this.productRepository.findAndCount({
+      take: take,
+      skip: skip,
+    });
+
+    const numberOfPages = Math.ceil(total / take);
+
+    return {
+      data: result,
+      meta: {
+        total: total,
+        page: query.page + 1,
+        limit: query.limit,
+        count: result.length,
+        pages: numberOfPages,
+        next: query.page < numberOfPages ? query.page + 1 : false,
+        prev: query.page > 1 ? query.page - 1 : false,
+        totalRecords: total,
+      },
+    };
   }
 
   async getDailyProfit(date?: Date): Promise<number> {
