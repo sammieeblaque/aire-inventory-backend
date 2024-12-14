@@ -10,6 +10,10 @@ export class UploadsService<T> {
     const csvData =
       typeof filePath === 'string' ? filePath : filePath.toString();
 
+    if (!csvData.trim()) {
+      return Promise.resolve([]);
+    }
+
     return new Promise((resolve, reject) => {
       parse(csvData, {
         header: true, // Treat the first row as headers
