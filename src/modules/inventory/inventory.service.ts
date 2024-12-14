@@ -12,7 +12,7 @@ import { Product } from './entities/product.entity';
 import { Sale } from './entities/sale.entity';
 import { ApiQuery } from '@nestjs/swagger';
 import { IQuery, PaginatedResponse } from 'src/@types';
-import { findAndPaginate } from 'src/@shared';
+import { findAndPaginate } from 'src/@shared/findAndPaginate';
 
 @Injectable()
 export class InventoryService {

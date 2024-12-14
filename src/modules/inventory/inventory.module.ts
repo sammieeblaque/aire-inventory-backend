@@ -4,11 +4,11 @@ import { InventoryService } from './inventory.service';
 import { InventoryController } from './inventory.controller';
 import { Product } from './entities/product.entity';
 import { Sale } from './entities/sale.entity';
-import { UploadsModule } from '../uploads/uploads.module';
+import { UploadsService } from 'src/@shared/uploadFile';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product, Sale]), UploadsModule],
+  imports: [TypeOrmModule.forFeature([Product, Sale])],
   controllers: [InventoryController],
-  providers: [InventoryService],
+  providers: [InventoryService, UploadsService],
 })
 export class InventoryModule {}

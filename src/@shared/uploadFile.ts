@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Product } from '../inventory/entities/product.entity';
 import { parse } from 'papaparse';
 
 @Injectable()
-export class UploadsService {
-  async uploadProductFile(filePath: string | Buffer): Promise<Product[]> {
+export class UploadsService<T> {
+  async uploadProductFile(filePath: string | Buffer): Promise<T[]> {
     const csvData = filePath.toString();
 
     return new Promise((resolve, reject) => {

@@ -6,7 +6,6 @@ import typeorm from './config/typeorm.config';
 import configuration from './config/configuration.config';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
-import { UploadsModule } from './modules/uploads/uploads.module';
 
 @Module({
   imports: [
@@ -21,7 +20,6 @@ import { UploadsModule } from './modules/uploads/uploads.module';
         configService.get('typeorm'),
     }),
     InventoryModule,
-    UploadsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

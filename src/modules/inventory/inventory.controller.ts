@@ -13,13 +13,14 @@ import { SellProductDto } from './dto/sell-product.dto';
 import { IQuery } from 'src/@types';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiProperty } from '@nestjs/swagger';
-import { UploadsService } from '../uploads/uploads.service';
+import { UploadsService } from 'src/@shared/uploadFile';
+import { Product } from './entities/product.entity';
 
 @Controller('api/inventory')
 export class InventoryController {
   constructor(
     private readonly inventoryService: InventoryService,
-    private readonly uploadService: UploadsService,
+    private readonly uploadService: UploadsService<Product>,
   ) {}
 
   @Post('products')
