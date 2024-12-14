@@ -4,8 +4,8 @@ import {
   ConflictException,
   Query,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Between, ILike, Repository } from 'typeorm';
+import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
+import { Between, EntityManager, ILike, Repository } from 'typeorm';
 import { CreateProductDto } from './dto/create-product.dto';
 import { SellProductDto } from './dto/sell-product.dto';
 import { Product } from './entities/product.entity';
@@ -17,6 +17,8 @@ import { findAndPaginate } from 'src/@shared';
 @Injectable()
 export class InventoryService {
   constructor(
+    @InjectEntityManager()
+    private readonly entityManager: EntityManager,
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
     @InjectRepository(Sale)
@@ -123,5 +125,16 @@ export class InventoryService {
     return this.saleRepository.find({
       order: { date: 'DESC' },
     });
+  }
+
+  async createManyProducts(data: Partial<Product>[]) {
+    const products = this.entityManager.transaction(async (entityManager) => {
+      return await Promise.all(
+        data.map(async (user) => {
+          return await entityManager.save(Product, user);
+        }),
+      );
+    });
+    return products;
   }
 }
