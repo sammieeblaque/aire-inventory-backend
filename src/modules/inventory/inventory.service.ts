@@ -13,6 +13,7 @@ import { Sale } from './entities/sale.entity';
 import { ApiQuery } from '@nestjs/swagger';
 import { IQuery, PaginatedResponse } from 'src/@types';
 import { findAndPaginate } from 'src/@shared/findAndPaginate';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Injectable()
 export class InventoryService {
@@ -136,5 +137,21 @@ export class InventoryService {
       );
     });
     return products;
+  }
+
+  async updateProducts(updateProductDto: UpdateProductDto, id: string) {
+    const product = await this.productRepository.findOne({ where: { id } });
+    if (!product) {
+      throw new NotFoundException(`Product ${id} not found`);
+    }
+    return this.productRepository.update(id, updateProductDto);
+  }
+
+  async getProductById(id: string) {
+    const product = await this.productRepository.findOne({ where: { id } });
+    if (!product) {
+      throw new NotFoundException(`Product ${id} not found`);
+    }
+    return product;
   }
 }

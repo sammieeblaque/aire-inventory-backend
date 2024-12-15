@@ -6,6 +6,8 @@ import {
   Query,
   UseInterceptors,
   UploadedFile,
+  Put,
+  Param,
 } from '@nestjs/common';
 import { InventoryService } from './inventory.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -62,5 +64,18 @@ export class InventoryController {
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
     const data = await this.uploadService.uploadProductFile(file.buffer);
     return this.inventoryService.createManyProducts(data);
+  }
+
+  @Put('update/:id')
+  async updateProduct(
+    @Body() updateProductDto: CreateProductDto,
+    @Param('id') id: string,
+  ) {
+    return this.inventoryService.updateProducts(updateProductDto, id);
+  }
+
+  @Get('/:id')
+  async getProductById(@Param('id') id: string) {
+    return this.inventoryService.getProductById(id);
   }
 }
