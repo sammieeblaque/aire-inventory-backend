@@ -17,24 +17,12 @@ async function bootstrap() {
     origin: '*',
   });
 
-  // const storage = multer.diskStorage({
-  //   destination: function (req, file, cb) {
-  //     cb(null, '/tmp/my-uploads');
-  //   },
-  //   filename: function (req, file, cb) {
-  //     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-  //     cb(null, file.fieldname + '-' + uniqueSuffix);
-  //   },
-  // });
-
-  // const upload = multer({ storage: storage });
-
   const config = new DocumentBuilder()
     .setTitle('Aire Beauty API Documentation')
     .setDescription('The Aire API description')
     .setVersion('1.0')
     .addTag('Aire')
-    .addBearerAuth()
+    // .addBearerAuth()
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);

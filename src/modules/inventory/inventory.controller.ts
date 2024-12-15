@@ -17,6 +17,7 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiConsumes, ApiProperty } from '@nestjs/swagger';
 import { UploadsService } from 'src/@shared/uploadFile';
 import { Product } from './entities/product.entity';
+import { UpdateProductDto } from './dto/update-product.dto';
 
 @Controller('api/inventory')
 export class InventoryController {
@@ -68,7 +69,7 @@ export class InventoryController {
 
   @Put('update/:id')
   async updateProduct(
-    @Body() updateProductDto: CreateProductDto,
+    @Body() updateProductDto: UpdateProductDto,
     @Param('id') id: string,
   ) {
     return this.inventoryService.updateProducts(updateProductDto, id);
