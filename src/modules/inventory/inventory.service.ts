@@ -84,6 +84,11 @@ export class InventoryService {
   async getInventoryReport(
     @Query() query: IQuery,
   ): Promise<PaginatedResponse<Product>> {
+    if (query.search) {
+      query.search = query.search.trim();
+    } else {
+      delete query.search;
+    }
     const { data, meta } = await findAndPaginate(
       query,
       this.productRepository,
