@@ -6,6 +6,8 @@ import typeorm from './config/typeorm.config';
 import configuration from './config/configuration.config';
 import { AppService } from './app.service';
 import { AppController } from './app.controller';
+import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -19,9 +21,20 @@ import { AppController } from './app.controller';
       useFactory: async (configService: ConfigService) =>
         configService.get('typeorm'),
     }),
+    CacheModule.register({
+      ttl: 10000,
+      max: 100,
+      isGlobal: true,
+    }),
     InventoryModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useValue: CacheInterceptor,
+    },
+  ],
 })
 export class AppModule {}

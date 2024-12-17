@@ -36,6 +36,7 @@ export class InventoryController {
     return this.inventoryService.sellProduct(sellProductDto);
   }
 
+  @ApiProperty({})
   @Get('report')
   getInventoryReport(@Query() query: IQuery) {
     return this.inventoryService.getInventoryReport(query);
