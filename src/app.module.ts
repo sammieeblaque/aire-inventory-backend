@@ -9,6 +9,7 @@ import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
+import { WalletModule } from './modules/wallet/wallet.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { APP_INTERCEPTOR } from '@nestjs/core';
     }),
     InventoryModule,
     SuppliersModule,
+    WalletModule,
   ],
   controllers: [AppController],
   providers: [
