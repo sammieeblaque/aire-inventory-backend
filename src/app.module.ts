@@ -1,7 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { InventoryModule } from './modules/inventory/inventory.module';
-import { SuppliersModule } from './modules/suppliers/suppliers.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeorm from './config/typeorm.config';
 import configuration from './config/configuration.config';
@@ -29,7 +28,6 @@ import { WalletModule } from './modules/wallet/wallet.module';
       isGlobal: true,
     }),
     InventoryModule,
-    SuppliersModule,
     WalletModule,
   ],
   controllers: [AppController],
