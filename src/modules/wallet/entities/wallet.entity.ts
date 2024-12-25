@@ -28,4 +28,7 @@ export class Wallet {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({ nullable: true, precision: 10, scale: 2 })
+  holdBalance: number;
 }

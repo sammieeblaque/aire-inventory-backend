@@ -39,6 +39,7 @@
   "devDependencies": {
     "@nestjs/cli": "^10.0.0",
     "@nestjs/config": "^3.3.0",
+    "@nestjs/event-emitter": "^2.1.1",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/swagger": "^8.1.0",
     "@nestjs/testing": "^10.0.0",

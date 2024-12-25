@@ -7,12 +7,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateWalletDto, TransactionDto } from './dto/create-wallet.dto';
 import { Wallet } from './entities/wallet.entity';
+import { Hold } from './entities/hold.entities';
 
 @Injectable()
 export class WalletService {
   constructor(
     @InjectRepository(Wallet)
     private walletRepository: Repository<Wallet>,
+    @InjectRepository(Hold)
+    private holdRepository: Repository<Hold>,
   ) {}
 
   async createWallet(createWalletDto: CreateWalletDto): Promise<Wallet> {
