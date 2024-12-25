@@ -9,7 +9,7 @@ import { AppController } from './app.controller';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { WalletModule } from './modules/wallet/wallet.module';
-import { EventEmitterModule } from '@nestjs/event-emitter';
+import { UsersModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -30,8 +30,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     }),
     InventoryModule,
     WalletModule,
-
-    EventEmitterModule.forRoot(),
+    UsersModule,
   ],
   controllers: [AppController],
   providers: [

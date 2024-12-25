@@ -1,9 +1,11 @@
+import { User } from 'src/modules/users/entities/user.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
+  ManyToOne,
 } from 'typeorm';
 
 @Entity()
@@ -11,7 +13,7 @@ export class Wallet {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column()
+  @Column('uuid')
   userId: string;
 
   @Column('decimal', { precision: 10, scale: 2, default: 0 })
@@ -28,4 +30,7 @@ export class Wallet {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @ManyToOne(() => User, (user) => user.wallets)
+  user: User;
 }
