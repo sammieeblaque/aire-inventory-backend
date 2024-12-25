@@ -9,7 +9,6 @@ import { AppController } from './app.controller';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { WalletModule } from './modules/wallet/wallet.module';
-import { MultipleSignatoryModule } from './modules/multiple-signatory/multiple-signatory.module';
 import { EventEmitterModule } from '@nestjs/event-emitter';
 
 @Module({
@@ -31,7 +30,7 @@ import { EventEmitterModule } from '@nestjs/event-emitter';
     }),
     InventoryModule,
     WalletModule,
-    MultipleSignatoryModule,
+
     EventEmitterModule.forRoot(),
   ],
   controllers: [AppController],
