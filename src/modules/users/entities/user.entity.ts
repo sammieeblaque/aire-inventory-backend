@@ -1,19 +1,9 @@
+import { BaseEntity } from 'src/@shared/base.entity';
 import { Wallet } from 'src/modules/wallet/entities/wallet.entity';
-import {
-  Column,
-  CreateDateColumn,
-  DeleteDateColumn,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany } from 'typeorm';
 
 @Entity()
-export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class User extends BaseEntity {
   @Column()
   first_name: string;
 
@@ -41,15 +31,6 @@ export class User {
     default: true,
   })
   isActive: boolean;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
-
-  @DeleteDateColumn()
-  deletedAt: Date;
 
   @OneToMany(() => Wallet, (wallet) => wallet.user, {
     cascade: true,

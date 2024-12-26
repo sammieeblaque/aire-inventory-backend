@@ -1,12 +1,6 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  CreateDateColumn,
-  UpdateDateColumn,
-} from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 import { Wallet } from './wallet.entity';
+import { BaseEntity } from 'src/@shared/base.entity';
 
 export enum HoldStatus {
   ACTIVE = 'active',
@@ -16,10 +10,7 @@ export enum HoldStatus {
 }
 
 @Entity()
-export class Hold {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Hold extends BaseEntity {
   @ManyToOne(() => Wallet)
   wallet: Wallet;
 
@@ -41,10 +32,4 @@ export class Hold {
 
   @Column({ nullable: true })
   metadata: Record<string, any>;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 }

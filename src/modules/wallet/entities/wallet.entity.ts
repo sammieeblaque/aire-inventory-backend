@@ -1,18 +1,9 @@
+import { BaseEntity } from 'src/@shared/base.entity';
 import { User } from 'src/modules/users/entities/user.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-} from 'typeorm';
+import { Entity, Column, ManyToOne } from 'typeorm';
 
 @Entity()
-export class Wallet {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class Wallet extends BaseEntity {
   @Column('uuid')
   userId: string;
 
@@ -24,12 +15,6 @@ export class Wallet {
 
   @Column({ default: true })
   isActive: boolean;
-
-  @CreateDateColumn()
-  createdAt: Date;
-
-  @UpdateDateColumn()
-  updatedAt: Date;
 
   @ManyToOne(() => User, (user) => user.wallets)
   user: User;
