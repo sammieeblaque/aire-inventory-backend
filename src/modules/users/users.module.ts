@@ -6,6 +6,9 @@ import { BcryptService } from 'src/@shared/lib/hashing/bcrypt.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { WalletModule } from '../wallet/wallet.module';
+import { GetUsersUsecase } from './usecases/getUsersUsecase';
+import { BrokerService } from 'src/@shared/broker.service';
+import { CreateUserUsecase } from './usecases/createUserUsecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), WalletModule],
@@ -16,6 +19,9 @@ import { WalletModule } from '../wallet/wallet.module';
       provide: HashingService,
       useClass: BcryptService,
     },
+    GetUsersUsecase,
+    CreateUserUsecase,
+    BrokerService,
   ],
 })
 export class UsersModule {}

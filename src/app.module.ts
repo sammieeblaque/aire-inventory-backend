@@ -10,6 +10,8 @@ import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { WalletModule } from './modules/wallet/wallet.module';
 import { UsersModule } from './modules/users/users.module';
+import { AutomapperModule } from '@automapper/nestjs';
+import { classes } from '@automapper/classes';
 
 @Module({
   imports: [
@@ -31,6 +33,9 @@ import { UsersModule } from './modules/users/users.module';
     InventoryModule,
     WalletModule,
     UsersModule,
+    AutomapperModule.forRoot({
+      strategyInitializer: classes(),
+    }),
   ],
   controllers: [AppController],
   providers: [

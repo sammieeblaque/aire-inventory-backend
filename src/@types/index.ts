@@ -22,3 +22,14 @@ interface IPagedMeta {
   pages: number;
   totalRecords: number;
 }
+
+export enum UseCaseType {
+  TRIGGER = 'trigger',
+  ACTION = 'action',
+  CHECK = 'check',
+  AUTOMATION = 'automation',
+}
+export abstract class UseCase<T = any> {
+  abstract execute(...args: any[]): Promise<T>;
+  type?: UseCaseType = UseCaseType.ACTION;
+}

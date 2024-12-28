@@ -3,6 +3,8 @@ import {
   Controller,
   Delete,
   Get,
+  HttpCode,
+  HttpStatus,
   Param,
   Patch,
   Post,
@@ -10,14 +12,27 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { ApiInternalServerErrorResponse, ApiOperation } from '@nestjs/swagger';
+import { BrokerService } from 'src/@shared/broker.service';
+import { GetUsersUsecase } from './usecases/getUsersUsecase';
+import { CreateUserUsecase } from './usecases/createUserUsecase';
+import { User } from './entities/user.entity';
 
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(
+    private readonly usersService: UsersService,
+    private readonly brokerService: BrokerService,
+    private readonly getUsersUsecase: GetUsersUsecase,
+    private readonly createUserUsecase: CreateUserUsecase,
+  ) {}
 
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.create(createUserDto);
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.brokerService.runUseCases<User>(
+      [this.createUserUsecase],
+      createUserDto,
+    );
   }
 
   @Patch(':id')
@@ -26,8 +41,15 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Get all users', operationId: 'get-all-users' })
+  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
+  async fetchAll() {
+    const users = await this.brokerService.runUseCases(
+      [this.getUsersUsecase],
+      {},
+    );
+    return users;
   }
 
   @Delete(':id')
