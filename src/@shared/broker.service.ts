@@ -19,8 +19,6 @@ export class BrokerService {
         this.logger.debug(`Running ${useCases.length} use cases`);
         this.logger.debug(`Initial args: ${JSON.stringify(initialArgs)}`);
 
-        console.log(initialArgs, '<<<initialArgs');
-
         let results: Record<string, any> = initialArgs
           ? { ...initialArgs }
           : {};
