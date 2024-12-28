@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, Query } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
@@ -6,6 +6,8 @@ import { Repository } from 'typeorm';
 import { WalletService } from '../wallet/wallet.service';
 import { HashingService } from '../../@shared/lib/hashing/hashing.service';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { IQuery, PaginatedResponse } from 'src/@types';
+import { findAndPaginate } from 'src/@shared/findAndPaginate';
 
 @Injectable()
 export class UsersService {
@@ -48,8 +50,12 @@ export class UsersService {
     return this.userRepository.findOne({ where: { id } });
   }
 
-  findAll() {
-    return this.userRepository.find();
+  async findAll(@Query() query: IQuery): Promise<PaginatedResponse<User>> {
+    const { data, meta } = await findAndPaginate(query, this.userRepository);
+    return {
+      data,
+      meta,
+    };
   }
 
   async remove(id: string) {

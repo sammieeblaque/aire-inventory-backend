@@ -8,6 +8,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -17,6 +18,7 @@ import { BrokerService } from 'src/@shared/broker.service';
 import { GetUsersUsecase } from './usecases/getUsersUsecase';
 import { CreateUserUsecase } from './usecases/createUserUsecase';
 import { User } from './entities/user.entity';
+import { IQuery } from 'src/@types';
 
 @Controller('users')
 export class UsersController {
@@ -44,10 +46,10 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Get all users', operationId: 'get-all-users' })
   @ApiInternalServerErrorResponse({ description: 'Internal server error' })
-  async fetchAll() {
+  async fetchAll(@Query() query: IQuery) {
     const users = await this.brokerService.runUseCases(
       [this.getUsersUsecase],
-      {},
+      query,
     );
     return users;
   }

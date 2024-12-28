@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 export const findAndPaginate = async <T>(
   query: IQuery,
   repository: Repository<T>,
-  where: Record<string, any>,
+  where?: Record<string, any>,
 ) => {
   query.page = Number(query.page) > 1 ? Number(query.page) - 1 : 0;
   const take = Number(query.limit) || 10;
