@@ -26,7 +26,7 @@ import { classes } from '@automapper/classes';
         configService.get('typeorm'),
     }),
     CacheModule.register({
-      ttl: 10000,
+      ttl: 30000,
       max: 100,
       isGlobal: true,
     }),
@@ -42,7 +42,7 @@ import { classes } from '@automapper/classes';
     AppService,
     {
       provide: APP_INTERCEPTOR,
-      useValue: CacheInterceptor,
+      useClass: CacheInterceptor,
     },
   ],
 })
