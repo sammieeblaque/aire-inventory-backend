@@ -30,6 +30,12 @@ export class UsersController {
   ) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({
+    summary: 'Create users',
+    operationId: 'create-users',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.brokerService.runUseCases<User>(
       [this.createUserUsecase],
@@ -38,6 +44,11 @@ export class UsersController {
   }
 
   @Patch(':id')
+  @ApiOperation({
+    summary: 'Update users',
+    operationId: 'update-users',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
   update(@Body() updateUserDto: UpdateUserDto, @Param('id') id: string) {
     return this.usersService.updateUser(id, updateUserDto);
   }
@@ -47,7 +58,7 @@ export class UsersController {
   @ApiOperation({ summary: 'Get all users', operationId: 'get-all-users' })
   @ApiInternalServerErrorResponse({ description: 'Internal server error' })
   async fetchAll(@Query() query: IQuery) {
-    const users = await this.brokerService.runUseCases(
+    const users = await this.brokerService.runUseCases<User[]>(
       [this.getUsersUsecase],
       query,
     );
@@ -55,6 +66,11 @@ export class UsersController {
   }
 
   @Delete(':id')
+  @ApiOperation({
+    summary: 'Delete users',
+    operationId: 'delete-users',
+  })
+  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
   remove(@Param('id') id: string) {
     return this.usersService.remove(id);
   }
