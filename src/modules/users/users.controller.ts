@@ -15,10 +15,11 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiInternalServerErrorResponse, ApiOperation } from '@nestjs/swagger';
 import { BrokerService } from 'src/@shared/broker.service';
-import { GetUsersUsecase } from './usecases/getUsersUsecase';
-import { CreateUserUsecase } from './usecases/createUserUsecase';
+import { GetUsersUsecase } from './usecases/getUsers.usecase';
+import { CreateUserUsecase } from './usecases/createUser.usecase';
 import { User } from './entities/user.entity';
 import { IQuery } from 'src/@types';
+import { RemoveUserUsecase } from './usecases/removeUser.usecase';
 
 @Controller('users')
 export class UsersController {
@@ -27,6 +28,7 @@ export class UsersController {
     private readonly brokerService: BrokerService,
     private readonly getUsersUsecase: GetUsersUsecase,
     private readonly createUserUsecase: CreateUserUsecase,
+    private readonly removeUserUsecase: RemoveUserUsecase,
   ) {}
 
   @Post()
@@ -71,7 +73,9 @@ export class UsersController {
     operationId: 'delete-users',
   })
   @ApiInternalServerErrorResponse({ description: 'Internal server error' })
-  remove(@Param('id') id: string) {
-    return this.usersService.remove(id);
+  async remove(@Param('id') id: string) {
+    return await this.brokerService.runUseCases([this.removeUserUsecase], {
+      id,
+    });
   }
 }

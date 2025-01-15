@@ -23,7 +23,7 @@ export const findAndPaginate = async <T>(
     meta: {
       total: total,
       page: query.page + 1,
-      limit: query.limit,
+      limit: +query.limit,
       count: result.length,
       pages: numberOfPages,
       next: query.page < numberOfPages ? query.page + 1 : false,

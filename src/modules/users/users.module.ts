@@ -6,9 +6,10 @@ import { BcryptService } from 'src/@shared/lib/hashing/bcrypt.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { WalletModule } from '../wallet/wallet.module';
-import { GetUsersUsecase } from './usecases/getUsersUsecase';
+import { GetUsersUsecase } from './usecases/getUsers.usecase';
 import { BrokerService } from 'src/@shared/broker.service';
-import { CreateUserUsecase } from './usecases/createUserUsecase';
+import { CreateUserUsecase } from './usecases/createUser.usecase';
+import { RemoveUserUsecase } from './usecases/removeUser.usecase';
 
 @Module({
   imports: [TypeOrmModule.forFeature([User]), WalletModule],
@@ -21,6 +22,7 @@ import { CreateUserUsecase } from './usecases/createUserUsecase';
     },
     GetUsersUsecase,
     CreateUserUsecase,
+    RemoveUserUsecase,
     BrokerService,
   ],
 })
