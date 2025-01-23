@@ -4,7 +4,7 @@ import {
   BadRequestException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { CreateWalletDto, TransactionDto } from './dto/create-wallet.dto';
 import { Wallet } from './entities/wallet.entity';
 
@@ -13,6 +13,7 @@ export class WalletService {
   constructor(
     @InjectRepository(Wallet)
     private walletRepository: Repository<Wallet>,
+    private entityManager: EntityManager,
   ) {}
 
   async createWallet(createWalletDto: CreateWalletDto): Promise<Wallet> {
@@ -82,7 +83,8 @@ export class WalletService {
     toUserId: string,
     transactionDto: TransactionDto,
   ) {
-    const transfer_trx = await this.walletRepository.manager.transaction(
+    // const transfer_trx = await this.walletRepository.manager.transaction(
+    const transfer_trx = await this.entityManager.transaction(
       async (transactionalEntityManager) => {
         const fromWallet = await this.getWallet(fromUserId);
         const toWallet = await this.getWallet(toUserId);
