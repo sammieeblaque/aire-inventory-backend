@@ -10,11 +10,12 @@ dotenvConfig();
 
 const typeorm = {
   type: 'postgres',
-  host: process.env.TYPEORM_POSTGRES_HOST,
-  port: parseInt(process.env.TYPEORM_POSTGRES_PORT, 10),
-  username: process.env.TYPEORM_POSTGRES_USER,
-  password: process.env.TYPEORM_POSTGRES_PASSWORD,
-  database: process.env.TYPEORM_POSTGRES_DB,
+  url: process.env.DATABASE_URL,
+  // host: process.env.TYPEORM_POSTGRES_HOST,
+  // port: parseInt(process.env.TYPEORM_POSTGRES_PORT, 10),
+  // username: process.env.TYPEORM_POSTGRES_USER,
+  // password: process.env.TYPEORM_POSTGRES_PASSWORD,
+  // database: process.env.TYPEORM_POSTGRES_DB,
 
   entities: ['dist/**/*.entity{.ts,.js}'],
   migrations: ['dist/migrations/**/*{.ts,.js}'],
