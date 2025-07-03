@@ -30,6 +30,6 @@ export class Hold extends BaseEntity {
   @Column({ nullable: true })
   expiresAt: Date;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, type: 'jsonb' })
   metadata: Record<string, any>;
 }
