@@ -3,13 +3,24 @@ import { Entity, Column } from 'typeorm';
 
 @Entity()
 export class Product extends BaseEntity {
-  @Column()
+  @Column({
+    type: 'varchar',
+    unique: true,
+  })
   name: string;
 
-  @Column('decimal')
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+  })
   costPrice: number;
 
-  @Column('decimal')
+  @Column({
+    type: 'decimal',
+    precision: 10,
+    scale: 2,
+  })
   sellingPrice: number;
 
   @Column('int')

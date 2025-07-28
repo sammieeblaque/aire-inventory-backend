@@ -8,6 +8,7 @@ import { HashingService } from '../../@shared/lib/hashing/hashing.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { IQuery, PaginatedResponse } from 'src/@types';
 import { findAndPaginate } from 'src/@shared/findAndPaginate';
+import { Currency } from '../wallet/entities/wallet.entity';
 
 @Injectable()
 export class UsersService {
@@ -29,7 +30,7 @@ export class UsersService {
 
     await this.walletService.createWallet({
       userId: createdUser.id,
-      currency: 'NGN',
+      currency: Currency.NGN,
     });
 
     return this.userRepository.findOne({

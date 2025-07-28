@@ -6,6 +6,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
+import { Currency } from '../entities/wallet.entity';
 
 export class CreateWalletDto {
   @ApiProperty({
@@ -31,7 +32,7 @@ export class CreateWalletDto {
   @IsCurrency({
     symbol: 'USD',
   })
-  currency?: string;
+  currency?: Currency;
 }
 
 export class TransactionDto {

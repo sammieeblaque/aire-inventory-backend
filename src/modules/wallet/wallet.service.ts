@@ -6,7 +6,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { EntityManager, Repository } from 'typeorm';
 import { CreateWalletDto, TransactionDto } from './dto/create-wallet.dto';
-import { Wallet } from './entities/wallet.entity';
+import { Currency, Wallet } from './entities/wallet.entity';
 
 @Injectable()
 export class WalletService {
@@ -27,7 +27,7 @@ export class WalletService {
 
     const wallet = this.walletRepository.create({
       userId: createWalletDto.userId,
-      currency: createWalletDto.currency || 'USD',
+      currency: createWalletDto.currency || Currency.USD,
       balance: 0,
     });
 
@@ -122,7 +122,7 @@ export class WalletService {
 
   async updateCurrency(userId: string, currency: string): Promise<Wallet> {
     const wallet = await this.getWallet(userId);
-    wallet.currency = currency;
+    wallet.currency = currency as Currency;
     return this.walletRepository.save(wallet);
   }
 }

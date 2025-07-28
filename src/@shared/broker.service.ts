@@ -12,39 +12,22 @@ export class BrokerService {
   async runUseCases<T>(
     useCases: UseCase[],
     initialArgs: Record<string, any> = {},
-    stripInitialArgs: boolean = true,
   ): Promise<T | any> {
     return this.entityManager.transaction(
       async (transactionalEntityManager) => {
         this.logger.debug(`Running ${useCases.length} use cases`);
-        this.logger.debug(`Initial args: ${JSON.stringify(initialArgs)}`);
 
-        let results: Record<string, any> = initialArgs
-          ? { ...initialArgs }
-          : {};
+        const results: Record<string, any> = { ...initialArgs };
 
         for (const useCase of useCases) {
-          this.logger.debug(`Running use case: ${useCase.constructor.name}`);
-          this.logger.debug(`Use case args: ${JSON.stringify(results)}`);
-
-          const result = await useCase.execute(
+          this.logger.debug(`Executing use case: ${useCase.constructor.name}`);
+          results.result = await useCase.execute(
             transactionalEntityManager,
             results,
           );
-
-          results = {
-            ...results,
-            result,
-          };
         }
 
-        if (stripInitialArgs) {
-          for (const key in initialArgs) {
-            delete results[key];
-          }
-        }
-
-        this.logger.debug(`Final results: ${JSON.stringify(results)}`);
+        this.logger.debug(`Execution results: ${JSON.stringify(results)}`);
         return results;
       },
     );
