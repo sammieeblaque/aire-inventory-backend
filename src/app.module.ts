@@ -12,6 +12,7 @@ import { WalletModule } from './modules/wallet/wallet.module';
 import { UsersModule } from './modules/users/users.module';
 import { AutomapperModule } from '@automapper/nestjs';
 import { classes } from '@automapper/classes';
+import { HealthModule } from './health/health.module';
 
 @Module({
   imports: [
@@ -36,6 +37,7 @@ import { classes } from '@automapper/classes';
     AutomapperModule.forRoot({
       strategyInitializer: classes(),
     }),
+    HealthModule,
   ],
   controllers: [AppController],
   providers: [
