@@ -18,7 +18,11 @@ export class HealthController {
   @HealthCheck()
   check() {
     return this.health.check([
-      () => this.http.pingCheck('local-application', 'http://localhost:8000'),
+      () =>
+        this.http.pingCheck(
+          'application',
+          `${process.env.NODE_ENV === 'production' ? 'http://localhost:8000' : 'https://aire-inventory-backend.onrender.com/'}`,
+        ),
     ]);
   }
 
